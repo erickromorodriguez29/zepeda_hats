@@ -1,0 +1,29 @@
+========================================
+CARPETA DE VIDEOS
+========================================
+
+Coloca aqui tus archivos de video .mp4
+
+Nombra los archivos como:
+- video-1.mp4
+- video-2.mp4
+- video-3.mp4
+- etc.
+
+Asegurate de que cada video tenga su miniatura
+correspondiente en:
+/images/videos/thumbnails/
+
+Por ejemplo:
+- video-1.mp4 -> video-1.jpg (miniatura)
+- video-2.mp4 -> video-2.jpg (miniatura)
+
+Formatos recomendados:
+- Video: .mp4 (H.264 codec)
+- Resolucion: 1080p o 720p
+- Duracion: 30 segundos a 2 minutos
+
+Para agregar mas videos, edita el archivo:
+/js/products.js
+
+Y agrega una nueva entrada en el array VIDEOS

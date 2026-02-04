@@ -1,0 +1,149 @@
+========================================
+ZEPEDA'S HATS - ESTRUCTURA DE CARPETAS
+========================================
+
+Tu sitio web esta listo. Aqui te explico donde colocar tus archivos:
+
+/
+├── index.html              # Pagina principal (NO MODIFICAR)
+├── css/
+│   └── styles.css          # Estilos (NO MODIFICAR)
+├── js/
+│   ├── products.js         # AQUI AGREGAS TUS PRODUCTOS
+│   └── main.js             # Logica del sitio (NO MODIFICAR)
+│
+├── images/
+│   ├── logo.png            # Logo de la tienda
+│   ├── placeholder.jpg     # Imagen por defecto
+│   │
+│   ├── hero/               # IMAGENES DEL CARRUSEL PRINCIPAL
+│   │   ├── hero-1.jpg      # Primera imagen del slider
+│   │   ├── hero-2.jpg      # Segunda imagen del slider
+│   │   └── hero-3.jpg      # Tercera imagen del slider
+│   │
+│   ├── products/           # IMAGENES DE PRODUCTOS
+│   │   ├── dandy/          # Gorras Dandy Hats
+│   │   │   ├── sad-forever.jpg
+│   │   │   ├── dias-nublados.jpg
+│   │   │   ├── yo-no-pesco.jpg
+│   │   │   ├── dandy-club.jpg
+│   │   │   ├── dandy-houston.jpg
+│   │   │   ├── dandy-studios.jpg
+│   │   │   └── junior-h.jpg
+│   │   │
+│   │   ├── 31hats/         # Gorras 31 Hats
+│   │   │   ├── el-mago.jpg
+│   │   │   ├── ny-clouds.jpg
+│   │   │   ├── la-clouds.jpg
+│   │   │   └── rude-ny.jpg
+│   │   │
+│   │   ├── barbas/         # Gorras Barbas Hats
+│   │   │   ├── chrome-black-out.jpg
+│   │   │   ├── rich-stars.jpg
+│   │   │   └── barbas-77.jpg
+│   │   │
+│   │   └── otros/          # Otras gorras
+│   │       ├── anymore-baez.jpg
+│   │       ├── los-mochis.jpg
+│   │       ├── sad-boyz-la.jpg
+│   │       └── psicodelica.jpg
+│   │
+│   ├── recent/             # MODELOS RECIENTES (carrusel)
+│   │   ├── recent-1.jpg
+│   │   ├── recent-2.jpg
+│   │   ├── recent-3.jpg
+│   │   ├── recent-4.jpg
+│   │   ├── recent-5.jpg
+│   │   └── recent-6.jpg
+│   │
+│   └── videos/
+│       └── thumbnails/     # MINIATURAS DE VIDEOS
+│           ├── video-1.jpg
+│           ├── video-2.jpg
+│           ├── video-3.jpg
+│           ├── video-4.jpg
+│           ├── video-5.jpg
+│           └── video-6.jpg
+│
+└── videos/                 # ARCHIVOS DE VIDEO .mp4
+    ├── video-1.mp4
+    ├── video-2.mp4
+    ├── video-3.mp4
+    ├── video-4.mp4
+    ├── video-5.mp4
+    └── video-6.mp4
+
+
+========================================
+COMO AGREGAR UN NUEVO PRODUCTO
+========================================
+
+1. Abre el archivo: js/products.js
+
+2. Busca el array PRODUCTS y agrega un nuevo objeto asi:
+
+{
+    id: 19,                                    // Numero unico
+    sku: "ZH-DANDY-008",                       // Codigo del producto
+    name: "NOMBRE DE LA GORRA",                // Nombre
+    description: "Descripcion del producto",   // Descripcion
+    price: 1500,                               // Precio actual
+    originalPrice: 1800,                       // Precio anterior (null si no hay)
+    image: "images/products/dandy/nueva.jpg",  // Ruta de la imagen
+    category: "dandy",                         // dandy, 31hats, barbas, otros
+    isOffer: true,                             // true si esta en oferta
+    isNew: false,                              // true si es nuevo
+    isSold: false                              // true si esta vendido
+}
+
+3. Coloca la imagen en la carpeta correspondiente
+
+
+========================================
+COMO AGREGAR UN NUEVO VIDEO
+========================================
+
+1. Abre el archivo: js/products.js
+
+2. Busca el array VIDEOS y agrega:
+
+{
+    id: 7,
+    title: "Titulo del Video",
+    thumbnail: "images/videos/thumbnails/video-7.jpg",
+    video: "videos/video-7.mp4"
+}
+
+3. Coloca el video .mp4 en /videos/
+4. Coloca la miniatura .jpg en /images/videos/thumbnails/
+
+
+========================================
+INFORMACION DE CONTACTO
+========================================
+
+Para cambiar el numero de WhatsApp:
+- Abre js/products.js
+- Busca: const WHATSAPP_NUMBER = "523322373159"
+- Cambia el numero (formato: codigo de pais + numero)
+
+
+========================================
+SUBIR A GITHUB PAGES
+========================================
+
+1. Crea un repositorio en GitHub
+2. Sube todos los archivos
+3. Ve a Settings > Pages
+4. Selecciona la rama "main" y carpeta "/ (root)"
+5. Tu sitio estara en: https://tuusuario.github.io/nombre-repo/
+
+
+========================================
+CONTACTO
+========================================
+
+Tienda: ZEPEDA'S HATS
+Telefono: 33 2237 3159
+Instagram: @zepeda_hats.mx
+Ubicacion: Jalisco, Mexico
