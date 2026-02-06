@@ -1,14 +1,11 @@
 /**
- * ZEPEDA'S HATS - Main JavaScript (FIXED)
- * =======================================
+ * ZEPEDA'S HATS - Main JavaScript (CLEAN + CART RESET ON REFRESH)
+ * ==============================================================
  */
 
 // Safe global references
 const AOS_LIB = window.AOS;
-
-
 const bootstrap = window.bootstrap;
-
 
 // Shopping Cart
 let cart = [];
@@ -19,6 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("DOM listo");
     console.log("PRODUCTS:", PRODUCTS);
 
+    // Vaciar carrito al refrescar la página
+    cart = [];
+    localStorage.removeItem("cart"); // elimina cualquier carrito guardado previamente
+
     // AOS init safe
     if (AOS_LIB) {
         AOS_LIB.init({
@@ -28,8 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    loadCart();
-
+    // Renderizar todo
     renderProducts();
     renderVideos();
     renderOffersCarousel();
@@ -41,41 +41,143 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* ================= PRODUCTS ================= */
 
+function toggleCart() {
+    const sidebar = document.getElementById("cartSidebar");
+    const overlay = document.getElementById("cartOverlay");
+
+    sidebar.classList.toggle("active");
+    overlay.classList.toggle("active");
+}
+
 function renderProducts(filter = "all") {
     const grid = document.getElementById("productsGrid");
     if (!grid || !PRODUCTS.length) return;
 
+    // Filtrar productos
     let filtered = PRODUCTS;
-
     if (filter !== "all") {
         filtered = filter === "ofertas"
             ? PRODUCTS.filter(p => p.isOffer)
             : PRODUCTS.filter(p => p.category === filter);
     }
 
+    // Generar HTML de productos
     grid.innerHTML = filtered.map(p => `
         <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up">
             <div class="product-card">
 
-                <img src="${p.image}" class="product-image"
-                     onerror="this.src='images/placeholder.jpg'">
+                <div class="product-image-container">
+                    <img src="${p.image}" class="product-image"
+                         onerror="this.src='images/placeholder.jpg'">
+                </div>
 
                 ${p.isNew ? `<span class="product-badge">NUEVO</span>` : ""}
                 ${p.isSold ? `<span class="product-badge sold">VENDIDO</span>` : ""}
 
-                <h5>${p.name}</h5>
-                <p>${p.description}</p>
+                <div class="product-info">
+                    <h5 class="product-title">${p.name}</h5>
+                    <p class="product-description">${p.description}</p>
 
-                <strong>$${p.price.toLocaleString()} MXN</strong>
+                    <div class="product-price">
+                        <span class="price-current">$${p.price.toLocaleString()} MXN</span>
+                        ${p.originalPrice ? `<span class="price-original">$${p.originalPrice.toLocaleString()} MXN</span>` : ""}
+                    </div>
 
-                <button onclick="addToCart(${p.id})"
-                        ${p.isSold ? "disabled" : ""}>
-                    ${p.isSold ? "Agotado" : "Agregar"}
-                </button>
+                    <button class="btn-add-cart" data-id="${p.id}" ${p.isSold ? "disabled" : ""}>
+                        ${p.isSold ? "Agotado" : "Agregar"}
+                    </button>
+                </div>
 
             </div>
         </div>
     `).join("");
+
+    // Asignar event listeners a los botones después de renderizar
+    grid.querySelectorAll(".btn-add-cart").forEach(btn => {
+        btn.addEventListener("click", () => {
+            addToCart(Number(btn.dataset.id));
+        });
+    });
+}
+
+/* ================= CART ================= */
+
+function renderCart() {
+    const container = document.getElementById("cartItems");
+    const totalEl = document.getElementById("cartTotal");
+
+    if (!container || !totalEl) return;
+
+    if (cart.length === 0) {
+        container.innerHTML = "<p>El carrito está vacío</p>";
+        totalEl.textContent = "$0.00 MXN";
+        return;
+    }
+
+    let total = 0;
+
+    container.innerHTML = cart.map(p => {
+        const subtotal = p.price * p.quantity;
+        total += subtotal;
+        return `
+            <div class="cart-item d-flex align-items-center mb-2" data-id="${p.id}">
+                <img src="${p.image}" alt="${p.name}" width="50" class="me-2" onerror="this.src='images/placeholder.jpg'">
+                <div class="flex-grow-1">
+                    <strong>${p.name}</strong>
+                    <div class="cart-controls mt-1">
+                        <button class="btn-decrease">-</button>
+                        <span class="cart-quantity">${p.quantity}</span>
+                        <button class="btn-increase">+</button>
+                    </div>
+                </div>
+                <div class="cart-subtotal">$${subtotal.toLocaleString()} MXN</div>
+            </div>
+        `;
+    }).join("");
+
+    totalEl.textContent = `$${total.toLocaleString()} MXN`;
+
+    // Asignar eventos a botones
+    container.querySelectorAll(".btn-increase").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const id = Number(btn.closest(".cart-item").dataset.id);
+            changeQuantity(id, 1);
+        });
+    });
+
+    container.querySelectorAll(".btn-decrease").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const id = Number(btn.closest(".cart-item").dataset.id);
+            changeQuantity(id, -1);
+        });
+    });
+}
+
+function changeQuantity(id, delta) {
+    const item = cart.find(p => p.id === id);
+    if (!item) return;
+
+    item.quantity += delta;
+    if (item.quantity < 1) {
+        cart = cart.filter(p => p.id !== id);
+    }
+
+    saveCart();
+    updateCartUI();
+    renderCart();
+}
+
+/* ================= CART STORAGE HELPERS ================= */
+
+function saveCart() {
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function loadCart() {
+    const stored = localStorage.getItem("cart");
+    if (stored) {
+        cart = JSON.parse(stored);
+    }
 }
 
 /* ================= VIDEOS ================= */
@@ -175,17 +277,19 @@ function saveCart(){
 }
 
 function addToCart(id){
-    const p = PRODUCTS.find(x=>x.id===id);
+    const p = PRODUCTS.find(x => x.id === id);
     if(!p || p.isSold) return;
 
-    const found = cart.find(x=>x.id===id);
+    const found = cart.find(x => x.id === id);
     found ? found.quantity++ :
         cart.push({...p, quantity:1});
 
     saveCart();
     updateCartUI();
+    renderCart();       // <-- renderiza el carrito
     showToast("Agregado al carrito");
 }
+
 
 function updateCartUI(){
     const count = document.getElementById("cartCount");
@@ -237,3 +341,4 @@ function chunkArray(arr,size){
         r.push(arr.slice(i,i+size));
     return r;
 }
+
