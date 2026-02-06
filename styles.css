@@ -1250,43 +1250,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-@media (max-width: 768px) {
-    #floatingCart {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 1000;
-        border-radius: 50%;
-        width: 60px;
-        height: 60px;
-        padding: 0;
-        font-size: 1.8rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        background-color: #0d6efd;
-        color: white;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
 
-    #floatingCart:active {
-        transform: scale(0.95);
-        box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-    }
-
-    #floatingCart .cart-count {
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        background: red;
-        color: white;
-        font-size: 0.8rem;
-        padding: 2px 6px;
-        border-radius: 50%;
-        font-weight: bold;
-    }
-}
 
 /* Contenedor de los botones flotantes */
 .floating-buttons {
@@ -1337,4 +1301,55 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* SOLO EN MÓVIL */
+@media (max-width: 768px) {
+
+    .floating-buttons {
+        position: fixed;
+        bottom: 80px;      /* lo subimos para que no choque con barras del sistema */
+        right: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;         /* espacio entre botones */
+        z-index: 1000;
+    }
+
+    /* Botón del carrito */
+    .btn-cart {
+        width: 62px;       /* un poco más grande para el dedo */
+        height: 62px;
+        font-size: 1.5rem;
+        border-radius: 50%;
+        background-color: #FFD700;
+        color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    }
+
+    .btn-cart:active {
+        transform: scale(0.95);
+    }
+
+    /* Contador */
+    .cart-count {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        width: 22px;
+        height: 22px;
+        font-size: 0.75rem;
+        background: red;
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    }
 }
