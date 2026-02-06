@@ -43,13 +43,12 @@
                     <li class="nav-item"><a class="nav-link" href="#videos">Videos</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
                 </ul>
-                <button class="btn btn-cart ms-3" onclick="toggleCart()">
-                    <i class="bi bi-cart3"></i>
-                    <span class="cart-count" id="cartCount">0</span>
-                </button>
+                
             </div>
         </div>
     </nav>
+
+                <
 
     <!-- Hero Carousel -->
     <section id="inicio" class="hero-section">
@@ -258,23 +257,33 @@
                         <a href="https://www.facebook.com/" target="_blank"><i class="bi bi-facebook"></i></a>
                         <a href="https://wa.me/523322373159" target="_blank"><i class="bi bi-whatsapp"></i></a>
                     </div>
+                </button>
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- Floating Buttons -->
-    <div class="floating-buttons">
-        <a href="https://wa.me/523322373159" class="floating-btn whatsapp-btn" target="_blank" title="WhatsApp">
-            <i class="bi bi-whatsapp"></i>
-        </a>
-        <a href="https://www.instagram.com/zepeda_hats.mx" class="floating-btn instagram-btn" target="_blank" title="Instagram">
-            <i class="bi bi-instagram"></i>
-        </a>
-        <a href="https://www.facebook.com/" class="floating-btn facebook-btn" target="_blank" title="Facebook">
-            <i class="bi bi-facebook"></i>
-        </a>
-    </div>
+   <div class="floating-buttons">
+    <button class="btn btn-cart" id="floatingCart" onclick="toggleCart()" title="Mi Carrito">
+        <i class="bi bi-cart3"></i>
+        <span class="cart-count" id="cartCount">0</span>
+    </button>
+
+    <a href="https://wa.me/523322373159" class="floating-btn whatsapp-btn" target="_blank" title="WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+    <a href="https://www.instagram.com/zepeda_hats.mx" class="floating-btn instagram-btn" target="_blank" title="Instagram">
+        <i class="bi bi-instagram"></i>
+    </a>
+    <a href="https://www.facebook.com/" class="floating-btn facebook-btn" target="_blank" title="Facebook">
+        <i class="bi bi-facebook"></i>
+    </a>
+</div>
+
+    
+   
+
 
     <!-- Shopping Cart Sidebar -->
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
